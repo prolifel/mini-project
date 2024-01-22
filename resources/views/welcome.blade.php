@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-
+    <script src="/resources/js/app.js"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net" />
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
+    <link rel="stylesheet" href="">
+    <link href="
+    https://cdn.jsdelivr.net/npm/flowbite-datepicker@1.2.6/dist/css/datepicker.min.css" rel="stylesheet">
     <!-- Styles -->
     <style>
         /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
@@ -860,43 +862,85 @@
                     @endif @endauth
                 </div>
             @endif
-            <div class="grid grid-cols-3 gap-8">
-                <div class="bg-red-300 col-span-2 text-">
+            <div class="grid grid-cols-3 gap-8 w-full mx-10">
+                <div class="bg-red-300 col-span-2">
                     Testing 1
-                    <form action="">
-                        <!-- Label Option -->
-                        <div>
 
-                            <label for="countries"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an
-                                option</label>
-                            <select id="countries"
+                    <form class="mx-5 py-3">
+
+                        <div class="mb-6">
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
+                                address</label>
+
+                            <label for="category_label"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Label</label>
+                            <select id="category_label"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>Choose a country</option>
-                                <option value="US">United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="FR">France</option>
-                                <option value="DE">Germany</option>
+                                <option selected disabled>Choose a ...</option>
+                                <option value="project">Project</option>
+                                <option value="meeting">Meeting</option>
+                                <option value="unproductive">Unproductive</option>
                             </select>
 
                         </div>
-                        <!-- Description -->
-                        <div></div>
-                        <!-- Button Row -->
-                        <div>
-                            <!-- date -->
-                            <div></div>
-                            <!-- startTime -->
-                            <div></div>
-                            <!-- endTime -->
-                            <div></div>
+                        <div class="mb-6">
+                            <label for="description"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                            <textarea style="resize: none" id="description"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="•••••••••" required>
+                            </textarea>
                         </div>
+                        <div class="mb-6">
+
+                            <div class="relative max-w-sm">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                    </svg>
+                                </div>
+                                <input datepicker datepicker-orientation="bottom right" type="text"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Select date" id="datepickerId">
+                            </div>
+
+                        </div>
+
+                        <button type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                     </form>
+
                 </div>
                 <div class="bg-red-300 col-span-1">Testing 2</div>
             </div>
         </div>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="
+    https://cdn.jsdelivr.net/npm/flowbite-datepicker@1.2.6/dist/js/datepicker-full.min.js
+    "></script>
+    <script>
+        const datepickerEl = document.getElementById('datepickerId');
+        const today = new Date();
+        const minDay = new Date();
+        switch (today.getDay()) {
+            case 1:
+                minDay.setDate(today.getDate() -3);
+                break;
+        
+            default:
+            minDay.setDate(today.getDate() -1);
+
+                break;
+        }
+        new Datepicker(datepickerEl, {
+            maxDate: today,
+            minDate: minDay
+
+        });
+        // console.log(today.getDay());
+    </script>
 
     </html>

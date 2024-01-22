@@ -1,6 +1,7 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
-
+import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+import Datepicker from 'flowbite-datepicker/Datepicker';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -20,5 +21,5 @@ export default {
         },
     },
 
-    plugins: [forms, require('flowbite/plugin')],
+    plugins: [forms, require('flowbite/plugin'), require("flowbite/Datepicker"), DateRangePicker],
 };
