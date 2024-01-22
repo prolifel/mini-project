@@ -3,7 +3,7 @@
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-    <script src="/resources/js/app.js"></script>
+    {{-- <script src="/resources/js/app.js"></script> --}}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -968,27 +968,29 @@
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="
-            https://cdn.jsdelivr.net/npm/flowbite-datepicker@1.2.6/dist/js/datepicker-full.min.js
-            "></script>
+                            https://cdn.jsdelivr.net/npm/flowbite-datepicker@1.2.6/dist/js/datepicker-full.min.js
+                            "></script>
     <script>
         const datepickerEl = document.getElementById('datepickerId');
-        const today = new Date();
-        const minDay = new Date();
-        switch (today.getDay()) {
-            case 1:
-                minDay.setDate(today.getDate() - 3);
-                break;
+        if (document.body.contains(datepickerEl)) {
+            const today = new Date();
+            const minDay = new Date();
+            switch (today.getDay()) {
+                case 1:
+                    minDay.setDate(today.getDate() - 3);
+                    break;
 
-            default:
-                minDay.setDate(today.getDate() - 1);
+                default:
+                    minDay.setDate(today.getDate() - 1);
 
-                break;
+                    break;
+            }
+            new Datepicker(datepickerEl, {
+                maxDate: today,
+                minDate: minDay
+
+            });
         }
-        new Datepicker(datepickerEl, {
-            maxDate: today,
-            minDate: minDay
-
-        });
         // console.log(today.getDay());
     </script>
 
