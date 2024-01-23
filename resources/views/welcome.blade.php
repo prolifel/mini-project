@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css"
         integrity="sha512-hbs/7O+vqWZS49DulqH1n2lVtu63t3c3MTAn0oYMINS5aT8eIAbJGDXgLt6IxDHcWyzVTgf9XyzZ9iWyVQ7mCQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1y8cvCwrG825pL16udwjQp4n+8LAzE7LLpE7R5x4PCuDAkaTIy2nX08tZoIqO/rYS28iseifP+E5T4wHq/QjQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-7/qQjU3x8q86E5J342b08t724d54n00y9q8hXj6f+Vw54m7s084y34nU81q824/5rqC7w8qAYbTq8E8" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -173,14 +176,14 @@
                                     <div class="flex">
                                         <div class="flex items-center me-4">
                                             <label for="start"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Start
                                                 time</label>
                                             <input type="time" id="start" name="start" class="ml-3"
                                                 min="09:00" max="17:00">
                                         </div>
                                         <div class="flex items-center me-4">
                                             <label for="end"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">End
                                                 time</label>
                                             <input type="time" id="end" name="end" min="09:00"
                                                 max="18:00" class="ml-3">
@@ -201,25 +204,25 @@
                     @forelse ($records as $record)
                         {{-- @dump($record) --}}
                         <div
-                            class=" block max-w-sm px-6 pt-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-5">
-                            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            class=" block max-w-sm px-6 pt-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-3">
+                            <h5 class=" text-xl font-bold tracking-tight text-gray-900 dark:text-white ml-0.5">
                                 {{ $record->category->name }}
                             </h5>
-                            <p class="font-normal text-gray-700 dark:text-gray-400 mb-3">
+                            <p class="font-normal text-gray-700 dark:text-gray-400 mb-3 m-0.5">
                                 {{ $record->description }}
                             </p>
                             <!-- properties -->
                             <div class="flex items-stretch justify-center">
-                                <div class="p-2 pb-10 b border-t-2">
-                                    <p class="text-sm">Start Time</p>
+                                <div class="p-2 pb-2 b border-t-2">
+                                    <p class="text-sm mx-3.5">Start Time</p>
                                     <p class="text-md text-center">{{ $record->start_time }}</p>
                                 </div>
-                                <div class="p-2 pb-10 border-x-2 b border-t-2">
-                                    <p class="text-sm">End Time</p>
+                                <div class="p-2 pb-2 border-x-2 b border-t-2">
+                                    <p class="text-sm mx-3.5">End Time</p>
                                     <p class="text-md text-center">{{ $record->end_time }}</p>
                                 </div>
-                                <div class="p-2 pb-10 border-t-2">
-                                    <p class="text-sm">Input Late?</p>
+                                <div class="p-2 pb-2 border-t-2">
+                                    <p class="text-sm mx-3.5">Input Late?</p>
                                     <p class="text-md text-center">{{ $record->is_late == 1 ? 'Yes' : 'No' }}</p>
                                 </div>
                             </div>
@@ -238,30 +241,18 @@
                     <div
                         class="flex-none justify-center w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                         <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white text-center">Ongoing Project</h5>
-                        <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400 text-center">Your ongoing
+                        <p class="mb-14 text-base text-gray-500 sm:text-lg dark:text-gray-400 text-center">Your ongoing
                             project Nama</p>
+                            <hr>
+                        <div class="flex mt-10">
+                            <svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3c.6 0 1 .4 1 1v15c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V5c0-.6.4-1 1-1h3m0 3h6m-3 5h3m-6 0h0m3 4h3m-6 0h0m1-13v4h4V3h-4Z"/>
+                              </svg>
+                              <p class="text-center text-gray-500 dark:text-gray-400 text-xl mt-2 ml-5" style="font-weight: bold">Ongoing Project</p>
+                              <button type="button" name="" class=" ml-14 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">End</button>
 
-                        <ul class="space-y-4 text-center text-gray-500 dark:text-gray-400 justify-center ">
-                            <li class="flex items-center space-x-3 rtl:space-x-reverse justify-center">
-                                <i class="fa-solid fa-list-check"></i>
-                                {{-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2" style="size: 48px">
-                                    <path
-                                        d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
-                                </svg> --}}
-                                <svg class="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 16 12">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                                </svg>
-                                <span class="text-center">Individual configuration <button type="button"
-                                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">End</button>
-                                </span>
-                            </li>
-
-
-
-                        </ul>
+                        </div>   
+                        
 
                     </div>
 
