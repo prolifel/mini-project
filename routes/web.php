@@ -32,4 +32,4 @@ Route::middleware('auth')->group(function () {
 // Route::get('/record/coba', [RecordController::class, 'store'])->name('record.store');
 Route::resource('record', RecordController::class);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
