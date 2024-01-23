@@ -32,6 +32,9 @@ class RecordController extends Controller
      */
     public function store(Request $request)
     {
+        // validation
+        dd($request->all(), Carbon::now()->format('H:i'));
+
         $id = auth()->user()->id;
         $date = $request->input('date');
         $time = strtotime($date);
@@ -40,18 +43,25 @@ class RecordController extends Controller
 
         $record = new Record();
         $record->date = $date;
-        $record->start_time = $request->input('start');
-        $record->end_time = $request->input('end');
+        switch ($request->input("type")) {
+            case 'manual':
+                $record->start_time = $request->input('start');
+                $record->end_time = $request->input('end');
+                break;
+            case 'auto':
+                $record->start_time = Carbon::now()->format('H:i');
+                break;
+            default:
+                return redirect('welcome')->with('error', 'Silakan pilih record secara manual atau otomatis!');
+        }
+
         $record->description = $request->input('description');
-        if ($time < $currentDateTime) {
+        $record->is_late = 0;
+        if ($time < $currentDateTime && $request->input("type") == 'auto') {
             $record->is_late = 1;
-        } else {
-            $record->is_late = 0;
         }
         $record->user_id = $id;
         $record->category_id = $request->input('category_id');
-        // dd($request->all());
-        // dd($record->start_time);
         $record->save();
 
         return redirect('welcome')->with('sukses', 'Successfully add task!');
