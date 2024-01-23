@@ -49,10 +49,13 @@ class RecordController extends Controller
         {
             $record->is_late = 0;
         }
+        $record->user_id = $id;
         $record->category_id = $request->input('category_id');
-        dd($request->all());
+        // dd($request->all());
         // dd($record->start_time);
         $record->save();
+
+        return redirect('welcome')->with('sukses', 'Successfully add task!');
     }
 
     /**
