@@ -6,12 +6,12 @@
     <!-- <script src="/resources/js/app.js"></script> -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <title>Laravel</title>
-
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net" />
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- <link href="
     https://cdn.jsdelivr.net/npm/flowbite-datepicker@1.2.6/dist/css/datepicker.min.css" rel="stylesheet"> -->
@@ -24,16 +24,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css"
         integrity="sha512-hbs/7O+vqWZS49DulqH1n2lVtu63t3c3MTAn0oYMINS5aT8eIAbJGDXgLt6IxDHcWyzVTgf9XyzZ9iWyVQ7mCQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1y8cvCwrG825pL16udwjQp4n+8LAzE7LLpE7R5x4PCuDAkaTIy2nX08tZoIqO/rYS28iseifP+E5T4wHq/QjQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-7/qQjU3x8q86E5J342b08t724d54n00y9q8hXj6f+Vw54m7s084y34nU81q824/5rqC7w8qAYbTq8E8" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  
 </head>
 
 <body class="antialiased">
     <!-- @dump($records) -->
-    <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+    <x-app-layout>
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Dashboard') }}
+            </h2>
+        </x-slot>
+    
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="">
+                    <div
+        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center  dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         @if (Route::has('login'))
             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                 @auth
@@ -58,7 +65,7 @@
         @endif
 
         @auth
-            <div class="grid grid-cols-3 gap-8 w-full mx-10">
+            <div class="grid grid-cols-3 gap-8 w-full">
                 @if (session('error'))
                     <div id="alert-2"
                         class="col-span-3 flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -109,7 +116,7 @@
                         </button>
                     </div>
                 @endif
-                <div class="bg-gray-200 col-span-2">
+                <div class="col-span-2 w-full p-4 bg-white mx-5 my-3 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <form class="mx-5 py-3" action="{{ route('record.store') }}" method="POST">
                         @csrf
                         <div class="mb-6">
@@ -174,19 +181,20 @@
                             <div class="mb-6">
                                 <div class="relative max-w-sm">
                                     <div class="flex">
-                                        <div class="flex items-center me-4">
+                                        <div class="flex items-center me-2">
                                             <label for="start"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Start
                                                 time</label>
-                                            <input type="time" id="start" name="start" class="ml-3"
+                                            <input type="time" id="start" name="start" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-1"
                                                 min="09:00" max="17:00">
                                         </div>
-                                        <div class="flex items-center me-4">
+                                        <div class="flex items-center me-2">
                                             <label for="end"
+
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">End
                                                 time</label>
                                             <input type="time" id="end" name="end" min="09:00"
-                                                max="18:00" class="ml-3">
+                                                max="18:00" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-1">
                                         </div>
                                     </div>
                                 </div>
@@ -200,7 +208,7 @@
                     </form>
 
                 </div>
-                <div class="bg-gray-200 ml-12 col-span-1 flex-none justify-center ">
+                <div class=" ml-12 col-span-1 flex-none justify-center ">
                     @forelse ($records as $record)
                         {{-- @dump($record) --}}
                         <div
@@ -213,16 +221,16 @@
                             </p>
                             <!-- properties -->
                             <div class="flex items-stretch justify-center">
-                                <div class="p-2 pb-2 b border-t-2">
-                                    <p class="text-sm mx-3.5">Start Time</p>
+                                <div class="  p-2 pb-2 b border-t-2">
+                                    <p class="text-sm">Start Time</p>
                                     <p class="text-md text-center">{{ $record->start_time }}</p>
                                 </div>
                                 <div class="p-2 pb-2 border-x-2 b border-t-2">
-                                    <p class="text-sm mx-3.5">End Time</p>
+                                    <p class="text-sm">End Time</p>
                                     <p class="text-md text-center">{{ $record->end_time }}</p>
                                 </div>
                                 <div class="p-2 pb-2 border-t-2">
-                                    <p class="text-sm mx-3.5">Input Late?</p>
+                                    <p class="text-sm">Input Late?</p>
                                     <p class="text-md text-center">{{ $record->is_late == 1 ? 'Yes' : 'No' }}</p>
                                 </div>
                             </div>
@@ -237,9 +245,9 @@
                     @endforelse
                 </div>
                 {{-- ini halaman untuk ketika klik submit yang auto akan diganti dengan ongoing --}}
-                <div class="bg-gray-200 col-span-2" id="ongoing">
+                <div class=" col-span-2" id="ongoing">
                     <div
-                        class="flex-none justify-center w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        class=" mx-5 my-3 flex-none justify-center w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                         <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white text-center">Ongoing Project</h5>
                         <p class="mb-14 text-base text-gray-500 sm:text-lg dark:text-gray-400 text-center">Your ongoing
                             project Nama</p>
@@ -248,8 +256,8 @@
                             <svg class="w-[50px] h-[50px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3c.6 0 1 .4 1 1v15c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V5c0-.6.4-1 1-1h3m0 3h6m-3 5h3m-6 0h0m3 4h3m-6 0h0m1-13v4h4V3h-4Z"/>
                               </svg>
-                              <p class="text-center text-gray-500 dark:text-gray-400 text-xl mt-2 ml-5" style="font-weight: bold">Ongoing Project</p>
-                              <button type="button" name="" class=" ml-14 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">End</button>
+                              <p class="text-center text-gray-500 dark:text-gray-400 text-xl mt-2 ml-3" >Ongoing Project</p>
+                              <button type="button" name="" class=" ml-3 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">End</button>
 
                         </div>   
                         
@@ -278,8 +286,14 @@
             </div>
         @endauth
     </div>
+                </div>
+            </div>
+        </div>
+    </x-app-layout>
+    
+    
 
-    </div>
+    
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
                                                                 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
