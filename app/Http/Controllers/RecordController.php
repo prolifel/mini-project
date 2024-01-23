@@ -13,7 +13,8 @@ class RecordController extends Controller
      */
     public function index()
     {
-        //
+        $data = Record::all();
+        dd($data);
     }
 
     /**
@@ -30,14 +31,28 @@ class RecordController extends Controller
     public function store(Request $request)
     {
         $id = auth()->user()->id;
+        $date = $request->input('date');
+        $time = strtotime($date);
+        $date = date('Y-m-d', $time);
+        $currentDateTime = strtotime(Carbon::now()->format('Y-m-d'));
+        // dd($date);
+
         $record = new Record();
-        $record->date = Carbon::now()->format('Y-m-d');
+        $record->date = $date;
         $record->start_time = Carbon::now()->format('H:i:s');
         $record->end_time = Carbon::now()->format('H:i:s');
         $record->description = $request->input('description');
-        $record->is_late = 0;
+        // $checkDateTime = $date->gt($currentDateTime);
+        if($time<$currentDateTime)
+        {
+            $record->is_late = 1;
+        } 
+        else
+        {
+            $record->is_late = 0;
+        }
         $record->category_id = $request->input('category_id');
-        dd($record->description);
+        dd($record->is_late);
 
         // $record->save();
     }
