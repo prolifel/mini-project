@@ -52,8 +52,7 @@
                         <form class="mx-5 py-3">
 
                             <div class="mb-6">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
-                                    address</label>
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Activity</label>
 
                                 <label for="category_label"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Label</label>
@@ -62,7 +61,7 @@
                                     <option selected disabled>Choose a ...</option>
                                     <option value="project">Project</option>
                                     <option value="meeting">Meeting</option>
-                                    <option value="unproductive">Unproductive</option>
+                                    <option value="unproductive">Unproductive Hour</option>
                                 </select>
 
                             </div>
@@ -71,7 +70,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                                 <textarea style="resize: none" id="description"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="•••••••••" required>
+                                   required>
                             </textarea>
                             </div>
                             <div class="mb-6">
