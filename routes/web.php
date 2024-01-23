@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route::get('/record/coba', [RecordController::class, 'store'])->name('record.store');
+Route::get('/record/report', [RecordController::class, 'report'])->name('record.report');
 Route::resource('record', RecordController::class);
 
 require __DIR__ . '/auth.php';

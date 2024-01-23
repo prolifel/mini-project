@@ -13,7 +13,13 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $records = Record::orderBy("created_at", "desc")->take(3)->get();
+        if (is_null(auth()->user())) {
+            return view("welcome");
+        }
+
+        $id = auth()->user()->id;
+        $currentDateTime = Carbon::now()->format('Y-m-d');
+        $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc")->get();
         return view("welcome", [
             "records" => $records
         ]);
@@ -33,8 +39,6 @@ class RecordController extends Controller
     public function store(Request $request)
     {
         // validation
-        dd($request->all(), Carbon::now()->format('H:i'));
-
         $id = auth()->user()->id;
         $date = $request->input('date');
         $time = strtotime($date);
@@ -42,7 +46,7 @@ class RecordController extends Controller
         $currentDateTime = strtotime(Carbon::now()->format('Y-m-d'));
 
         $record = new Record();
-        $record->date = $date;
+        
         switch ($request->input("type")) {
             case 'manual':
                 $record->start_time = $request->input('start');
@@ -50,11 +54,12 @@ class RecordController extends Controller
                 break;
             case 'auto':
                 $record->start_time = Carbon::now()->format('H:i');
+                $date = Carbon::now()->format('Y-m-d');
                 break;
             default:
-                return redirect('welcome')->with('error', 'Silakan pilih record secara manual atau otomatis!');
+                return back()->with('error', 'Silakan pilih record secara manual atau otomatis!');
         }
-
+        $record->date = $date;
         $record->description = $request->input('description');
         $record->is_late = 0;
         if ($time < $currentDateTime && $request->input("type") == 'manual') {
@@ -64,7 +69,7 @@ class RecordController extends Controller
         $record->category_id = $request->input('category_id');
         $record->save();
 
-        return redirect('welcome')->with('sukses', 'Successfully add task!');
+        return back()->with('sukses', 'Successfully add task!');
     }
 
     /**
@@ -97,5 +102,13 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         //
+    }
+
+    public function report()
+    {
+        $id = auth()->user()->id;
+        $currentDateTime = Carbon::now()->format('Y-m-d');
+        $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc")->get();
+        return view("report", compact('records'));
     }
 }
