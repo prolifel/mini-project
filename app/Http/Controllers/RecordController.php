@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Record;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class RecordController extends Controller
 {
@@ -28,7 +29,17 @@ class RecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = auth()->user()->id;
+        $record = new Record();
+        $record->date = Carbon::now()->format('Y-m-d');
+        $record->start_time = Carbon::now()->format('H:i:s');
+        $record->end_time = Carbon::now()->format('H:i:s');
+        $record->description = $request->input('description');
+        $record->is_late = 0;
+        $record->category_id = $request->input('category_id');
+        dd($record->description);
+
+        // $record->save();
     }
 
     /**

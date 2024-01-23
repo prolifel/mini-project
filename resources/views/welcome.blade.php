@@ -49,8 +49,8 @@
                     <div class="bg-red-300 col-span-2">
                         Testing 1
 
-                        <form class="mx-5 py-3">
-
+                        <form class="mx-5 py-3" action="{{ route('record.store')}}" method="POST">
+                            @csrf
                             <div class="mb-6">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Activity</label>
 
@@ -58,17 +58,17 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Label</label>
                                 <select id="category_label"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option selected disabled>Choose a ...</option>
-                                    <option value="project">Project</option>
-                                    <option value="meeting">Meeting</option>
-                                    <option value="unproductive">Unproductive Hour</option>
+                                    <option name="category_id" selected disabled>Choose a ...</option>
+                                    <option value="1">Project</option>
+                                    <option value="2">Meeting</option>
+                                    <option value="3">Unproductive Hour</option>
                                 </select>
 
                             </div>
                             <div class="mb-6">
                                 <label for="description"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                <textarea style="resize: none" id="description"
+                                <textarea style="resize: none" id="description" name="description"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                    required>
                             </textarea>
