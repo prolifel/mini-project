@@ -99,12 +99,12 @@
                                     <label for="start"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start time</label>
                                     
-                                    <input type="time" id="appt" name="start" min="09:00" max="18:00">
+                                    <input type="time" id="start" name="start" min="09:00" max="18:00">
 
                                     <label for="end"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End time</label>
                                     
-                                    <input type="time" id="appt" name="end" min="09:00" max="18:00">
+                                    <input type="time" id="end" name="end" min="09:00" max="18:00">
                                 </div>
                             </div>
                             <button type="submit"
@@ -227,6 +227,15 @@
                     minDate: -1
                 });
             });
+        </script>
+        <script>
+            document.getElementById('start').addEventListener('change', function() {
+                const startTime = document.getElementById('start').value;
+                console.log(startTime);
+                document.getElementById('end').min = startTime;
+            });
+            // const startTime = document.getElementById('start').value;
+            // document.getElementById('end').min = startTime;
         </script>
     </body>
 
