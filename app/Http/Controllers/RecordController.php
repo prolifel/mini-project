@@ -57,7 +57,7 @@ class RecordController extends Controller
 
         $record->description = $request->input('description');
         $record->is_late = 0;
-        if ($time < $currentDateTime && $request->input("type") == 'auto') {
+        if ($time < $currentDateTime && $request->input("type") == 'manual') {
             $record->is_late = 1;
         }
         $record->user_id = $id;
