@@ -13,8 +13,10 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $data = Record::all();
-        dd($data);
+        $records = Record::orderBy("created_at", "desc")->take(3)->get();
+        return view("welcome", [
+            "records" => $records
+        ]);
     }
 
     /**
@@ -41,12 +43,9 @@ class RecordController extends Controller
         $record->start_time = $request->input('start');
         $record->end_time = $request->input('end');
         $record->description = $request->input('description');
-        if($time<$currentDateTime)
-        {
+        if ($time < $currentDateTime) {
             $record->is_late = 1;
-        } 
-        else
-        {
+        } else {
             $record->is_late = 0;
         }
         $record->user_id = $id;
