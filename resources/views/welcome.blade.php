@@ -117,13 +117,15 @@
                             </div>
 
                         </div>
+                        <input type="hidden" name="type" value="manual">
+
                         <div class="mb-6">
                             <div class="relative max-w-sm">
                                 <label for="start"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
                                     time</label>
 
-                                <input type="time" id="start" name="start" min="09:00" max="18:00">
+                                <input type="time" id="start" name="start" class="" min="09:00" max="18:00">
 
                                 <label for="end"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
@@ -134,7 +136,7 @@
                         </div>
                     </div>
                     <div id="autoRadio">
-                        <button>ini button</button>
+                       <input type="hidden" name="type" value="auto">
                     </div>
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
