@@ -35,14 +35,12 @@ class RecordController extends Controller
         $time = strtotime($date);
         $date = date('Y-m-d', $time);
         $currentDateTime = strtotime(Carbon::now()->format('Y-m-d'));
-        // dd($date);
 
         $record = new Record();
         $record->date = $date;
-        $record->start_time = Carbon::now()->format('H:i:s');
-        $record->end_time = Carbon::now()->format('H:i:s');
+        $record->start_time = $request->input('start');
+        $record->end_time = $request->input('end');
         $record->description = $request->input('description');
-        // $checkDateTime = $date->gt($currentDateTime);
         if($time<$currentDateTime)
         {
             $record->is_late = 1;
@@ -52,9 +50,9 @@ class RecordController extends Controller
             $record->is_late = 0;
         }
         $record->category_id = $request->input('category_id');
-        dd($record->is_late);
-
-        // $record->save();
+        dd($request->all());
+        // dd($record->start_time);
+        $record->save();
     }
 
     /**

@@ -65,9 +65,9 @@
 
                                 <label for="category_label"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a Label</label>
-                                <select id="category_label"
+                                <select id="category_label" name="category_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option name="category_id" selected disabled>Choose a ...</option>
+                                    <option selected disabled>Choose a ...</option>
                                     <option value="1">Project</option>
                                     <option value="2">Meeting</option>
                                     <option value="3">Unproductive Hour</option>
