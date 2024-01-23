@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Record;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 
 class RecordController extends Controller
 {
@@ -97,5 +98,43 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         //
+    }
+
+    public function endAutoRecord(Request $request)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Must using API'
+            ], 422);
+        }
+
+        try {
+            $request->validate([
+                'id' => 'required|numeric|integer',
+            ]);
+
+            $record = Record::findOrFail($request->input('id'));
+
+            if (!is_null($record->end_time)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Record tersebut telah berakhir!',
+                ], 400);
+            }
+
+            $record->end_time = Carbon::now()->format('H:i');
+            $record->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Record telah tersimpan',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 }
