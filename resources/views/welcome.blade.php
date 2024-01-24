@@ -28,13 +28,13 @@
 </head>
 
 <body class="antialiased">
-    <!-- @dump($records) -->
+    {{-- <!-- @dump($records) --> --}}
     <x-app-layout>
-        <x-slot name="header">
+        {{-- <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Dashboard') }}
             </h2>
-        </x-slot>
+        </x-slot> --}}
     
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -44,14 +44,14 @@
         @if (Route::has('login'))
             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                 @auth
-                    <form method="POST" action="{{ route('logout') }}">
+                    {{-- <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
                         <a href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();"
                             class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
                             Out</a>
-                    </form>
-                @else
+                    </form> --}}
+                {{-- @else
                     <a href="{{ route('login') }}"
                         class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
                         in</a>
@@ -59,7 +59,7 @@
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
                             class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                    @endif
+                    @endif --}}
                 @endauth
             </div>
         @endif
