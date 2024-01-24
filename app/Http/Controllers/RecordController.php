@@ -107,6 +107,10 @@ class RecordController extends Controller
 
     public function report()
     {
+        if (is_null(auth()->user())) {
+            return view("welcome");
+        }
+
         $id = auth()->user()->id;
         $currentDateTime = Carbon::now()->format('Y-m-d');
         $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc")->get();
