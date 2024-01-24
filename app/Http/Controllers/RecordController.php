@@ -6,6 +6,7 @@ use App\Models\Record;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use DB;
 
 class RecordController extends Controller
 {
@@ -14,15 +15,18 @@ class RecordController extends Controller
      */
     public function index()
     {
-        if (is_null(auth()->user())) {
-            return view("welcome");
-        }
-
         $id = auth()->user()->id;
         $currentDateTime = Carbon::now()->format('Y-m-d');
-        $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc")->get();
+        $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc");
+        $isMore = $records->count() > 3 ? true : false;
+        $records = $records->limit(3)->get();
+        $recordOngoing = Record::where('date', $currentDateTime)->where('user_id', $id)->whereNull('end_time')->orderBy("created_at", "desc")->first();
+        $manualStartTime = !is_null($records) ? (!is_null($records->first()) ? $records->first()->end_time : '09:00') : '09:00';
         return view("welcome", [
-            "records" => $records
+            "records" => $records,
+            "recordOngoing" => $recordOngoing,
+            "isMore" => $isMore,
+            "manualStartTime" => $manualStartTime
         ]);
     }
 
@@ -106,19 +110,78 @@ class RecordController extends Controller
     }
 
     public function report()
-    {
-        if (is_null(auth()->user())) {
-            return view("welcome");
-        }
+    {   
+        $records = "";
+        return view("report", compact("records"));
+    }
 
+    public function detailReport(Request $request)
+    {
         $id = auth()->user()->id;
-        $currentDateTime = Carbon::now()->format('Y-m-d');
-        $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc")->get();
+        $periode = $request->periode;
+        
+        if($periode==2) {
+            //table
+            $tahun = Carbon::now()->format('Y');
+            $bulan = $request->bulan;
+            $start_date = Carbon::create($tahun, $bulan)->firstOfMonth();
+            $end_date = Carbon::create($tahun, $bulan)->lastOfMonth();
+            $records = Record::whereBetween('date', [$start_date, $end_date])->where('user_id', $id)->orderBy("created_at", "desc")->get();
+
+            //graph
+            $graph = DB::select("SELECT
+                WEEK(date) as week,
+                SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time_week
+                FROM records
+                WHERE user_id = 1 AND date BETWEEN '$start_date' AND '$end_date'
+                GROUP BY WEEK(date)
+                ORDER BY WEEK(date);");
+            // dd($graph);
+        } else {
+            //table
+            $date = Carbon::now()->format('Y-m-d');
+            $records = Record::where('date', $date)->where('user_id', $id)->orderBy("created_at", "desc")->get();
+
+            //graph
+        }
+        
         return view("report", compact('records'));
     }
+
+    public function graph()
+    {
+        // $id = auth()->user()->id;
+        // $periode = $request->periode;
+        // if($periode==2) {
+            // $tahun = Carbon::now()->format('Y');
+            // $bulan = $request->bulan;
+            // $start_date = Carbon::create($tahun, $bulan)->firstOfMonth();
+            // $end_date = Carbon::create($tahun, $bulan)->lastOfMonth();
+            
+            // $records = Record::whereBetween('date', [$start_date, $end_date])->where('user_id', $id)->orderBy("created_at", "desc")->get();
+        // } else {
+            $date = Carbon::now()->format('Y-m-d');
+            
+            $records = Record::where('date', $date)->where('user_id', 2)->orderBy("created_at", "desc")->get();
+            // $records = [];
+        // }
+        // dd($records);
+
+        return view("graph", compact('records'));
+    }
+
+    public function table()
+    {
+        // $id = auth()->user()->id;
+        // $currentDateTime = Carbon::now()->format('Y-m-d');
+        // $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc")->get();
+        return view("table");
+    }
+
     public function endAutoRecord(Request $request)
     {
-        if ($request->ajax() || $request->wantsJson()) {
+        // dd($request->wantsJson(), $request->ajax());
+        if (!$request->ajax() || $request->wantsJson()) {
             return new JsonResponse([
                 'status' => 'error',
                 'message' => 'Must using API'
