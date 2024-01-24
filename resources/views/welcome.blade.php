@@ -57,7 +57,7 @@
                 @endif
 
                 @auth
-                    <div class=" grid w-full  sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8 ">
+                    <div class=" grid w-full  sm:grid-cols-2 mt-10 sm:gap-6 lg:grid-cols-3 lg:gap-8 ">
                         @if (session('error'))
                             <div id="alert-2"
                                 class="col-span-3 flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -85,7 +85,7 @@
                         @endif
                         @if (session('sukses'))
                             <div id="alert-3"
-                                class=" mt-5 flex=none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-8 col-span-3 flex items-center mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                                class=" mt-10 flex=none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
                                 role="alert">
                                 <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -113,32 +113,33 @@
                                 <div
                                     class=" mx-5 my-3 flex-none  w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                                     <h5
-                                        class="justify-center mb-2 text-3xl font-bold text-gray-900 dark:text-white text-center">
-                                        Ongoing Project</h5>
-                                    <p class="mb-14 text-base text-gray-500 sm:text-lg dark:text-gray-400 text-center">
-                                        Category: {{ $recordOngoing->category->name }} </p>
+                                        class="justify-center mb-7 text-3xl font-bold text-gray-900 dark:text-white text-center ">
+                                        Ongoing Activity</h5>
+                                    {{-- <p class="mb-14 text-base text-gray-500 sm:text-lg dark:text-gray-400 text-center">
+                                        Category: {{ $recordOngoing->category->name }} </p> --}}
                                     <hr>
 
                                     <div class="flex mt-5">
                                         <div class="">
-                                            <svg class="w-[40px] h-[40px] text-gray-800 dark:text-white" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 35 35">
+                                            <svg class="w-[29px] h-[29px] text-gray-800 dark:text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                                     stroke-width="2"
-                                                    d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1H5a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Zm3-7h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Zm-8 4h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Z" />
+                                                    d="M15 4h3c.6 0 1 .4 1 1v15c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V5c0-.6.4-1 1-1h3m0 3h6m-3 5h3m-6 0h0m3 4h3m-6 0h0m1-13v4h4V3h-4Z" />
                                             </svg>
                                         </div>
-                                        <div class="mt-0.5">
-                                            <p>{{ $recordOngoing->date }}</p>
+                                        <div class="mt-0.5 text-xl">
+                                            <p>{{ $recordOngoing->category->name }} </p>
                                         </div>
                                     </div>
-                                    <p class="text-wrap text-justify">{{ $recordOngoing->description }}</p>
+                                    <p class="text-justify text-sm text-gray-500 ml-0.5 mt-1">{{ $recordOngoing->date }}</p>
+                                    <p class="text-wrap text-justify mt-2 ml-0.5">{{ $recordOngoing->description }}</p>
                                     <br>
                                     <div class="flex mt-3">
                                         <div class="">
                                             <p class="mt-1.5"> Start Time: {{ $recordOngoing->start_time }}</p>
                                         </div>
-                                        <div class="mt-0.5">
+                                        <div class="mt-0.5 ml-5">
                                             <button type="button" id="endButton" data-record-id="{{ $recordOngoing->id }}"
                                                 class="ml-2 px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">End</button>
                                         </div>
@@ -249,14 +250,14 @@
 
                             </div>
                         @endif
-                        <div class=" ml-12 lg:col-span-1 flex-none justify-center col-span-2">
+                        <div class=" lg:col-span-1 flex-none justify-center col-span-2">
                             @forelse ($records as $record)
                                 <div
                                     class=" block lg:max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-3 md:max-w-full">
                                     <h5 class=" text-xl font-bold tracking-tight text-gray-900 dark:text-white ml-0.5">
                                         {{ $record->category->name }}
                                     </h5>
-                                    <p class="font-normal text-gray-700 dark:text-gray-400 mb-3 m-0.5">
+                                    <p class="font-normal text-gray-700 text-sm dark:text-gray-400 mb-1.5 m-0.5">
                                         {{ $record->description }}
                                     </p>
                                     <!-- properties -->
@@ -286,14 +287,19 @@
                                 </div>
                             @endforelse
                             @if ($isMore)
-                                <div class="block lg:max-w-sm px-6 py-3 mx-5 my-3 md:max-w-full">
+                                {{-- <div class="block lg:max-w-sm px-6 py-3 mx-5 my-3 md:max-w-full">
                                     <a href="{{ route('record.report') }}"
-                                        class="w-full relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                                        class="w-full text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
                                         <span
                                             class="text-center w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                             Show more...
                                         </span>
                                     </a>
+                                </div> --}}
+                                <div class="block lg:max-w-sm px-6 py-3  my-3 md:max-w-full">
+                                    <a href="{{ route('record.report') }}"
+                                        class="w-full block text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Show
+                                        more</a>
                                 </div>
                             @endif
                         </div>
