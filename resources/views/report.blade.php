@@ -5,44 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Report</title>
+    <title>{{ config('app.name', 'Laravel') }} - Report</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 </head>
 
 <body class="bg-gray-100">
-    {{-- <x-app-layout> --}}
     @include('layouts.nav')
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
-        <div class="">
-            {{-- <div
-                class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center  dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"> --}}
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        {{-- <form method="POST" action="{{ route('logout') }}">
-                @csrf
-
-                <a href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                    Out</a>
-            </form> --}}
-                        {{-- @else
-            <a href="{{ route('login') }}"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                in</a>
-
-            @if (Route::has('register'))
-                <a href="{{ route('register') }}"
-                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-            @endif --}}
-                    @endauth
-                </div>
-            @endif
-        </div>
-        {{-- </div>  --}}
-    </div>
     <div class="container ">
         <div class="">
             <form class="mx-10 py-3" action="{{ route('record.detail') }}" method="POST">
@@ -123,9 +93,6 @@
             </div>
         </div>
     </div>
-
-    {{-- </x-app-layout> --}}
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

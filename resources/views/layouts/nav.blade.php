@@ -9,25 +9,16 @@
                 <ul
                     class="flex flex-row md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        {{-- <a href="{{ route('record.index') }}"
-                            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                            aria-current="page">Dashboard</a> --}}
                         <x-nav-link :href="route('record.index')" :active="request()->routeIs('record.index')" class="text-md">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     </li>
                     <li>
-                        {{-- <a :href="route('record.report')" :active="request() - > routeIs('record.report')"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                            {{ __('Report') }}</a> --}}
                         <x-nav-link :href="route('record.report')" :active="request()->routeIs('record.report')" class="text-md">
                             {{ __('Report') }}
                         </x-nav-link>
                     </li>
                     <li>
-                        {{-- <a :href="route('record.summary')" :active="request() - > routeIs('record.summary')"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                            {{ __('Summary') }}</a> --}}
                         <x-nav-link :href="route('record.summary')" :active="request()->routeIs('record.summary')" class="text-md">
                             {{ __('Summary') }}
                         </x-nav-link>
@@ -37,39 +28,6 @@
 
             </div>
         </div>
-        {{-- <x-dropdown align="right" width="48">
-            <x-slot name="trigger">
-                <button
-                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                    <div>{{ Auth::user()->name }}</div>
-
-                    <div class="ms-1">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                </button>
-            </x-slot>
-
-            <x-slot name="content">
-                <x-dropdown-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-dropdown-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-dropdown-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-dropdown-link>
-                </form>
-            </x-slot>
-        </x-dropdown> --}}
 
         <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" data-dropdown-offset-skidding="-50"
             class="text-blue-700 font-medium rounded-lg text-sm text-center inline-flex items-center mr-7 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -88,10 +46,8 @@
                     <x-dropdown-link :href="route('profile.edit')"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                         {{ __('Profile') }}
                     </x-dropdown-link>
-                    <!-- <a href="route('profile.edit')"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a> -->
                 </li>
-                
+
             </ul>
             <div class="p-2 text-center">
                 @auth
@@ -102,11 +58,6 @@
                         <button
                             class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             onclick="event.preventDefault(); this.closest('form').submit();">Log Out</button>
-                        {{-- <x-dropdown-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-dropdown-link> --}}
                     </form>
                 @else
                     <a href="{{ route('login') }}"
@@ -115,7 +66,6 @@
             </div>
         </div>
 
-        {{-- <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"> --}}
 
         <button data-collapse-toggle="navbar-sticky" type="button"
             class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -127,8 +77,6 @@
                     d="M1 1h15M1 7h15M1 13h15" />
             </svg>
         </button>
-        {{-- </div> --}}
-
 
     </div>
 </nav>

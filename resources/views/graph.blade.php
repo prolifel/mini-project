@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Report</title>
+    <title>{{ config('app.name', 'Laravel') }} - Report Graph</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
@@ -13,15 +13,15 @@
 </head>
 
 <body>
-    
+
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-               
+
             </h2>
         </x-slot>
-    
-        
+
+
             <div class="flex-none justify-center py-3  ">
                 <div style="width: 800px" class=" mx-auto">
                     <canvas id="acquisitions"></canvas>
@@ -35,10 +35,7 @@
     </x-app-layout>
 
 
-
-
-
-    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         @if ($records!=[])
