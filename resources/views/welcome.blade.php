@@ -343,8 +343,14 @@
                 minDate: -1
             });
         });
+
+        
     </script>
     <script>
+        const minStartTime = "09:00";
+        const maxStartTime = "18:00";
+
+        
         if ($('#start').length > 0) {
             document.getElementById('start').addEventListener('change', function() {
                 const startTime = document.getElementById('start').value;
@@ -352,6 +358,19 @@
                 document.getElementById('end').min = startTime;
             });
         }
+
+        let timer = document.getElementById("appt");
+
+        timer.addEventListener("change", function() {
+            if (timer.value < minStartTime) {
+                alert("please enter valid start time");
+                timer.value = minStartTime;
+            }
+            if (timer.value > maxStartTime) {
+                alert("please enter valid start time");
+                timer.value = maxStartTime;
+            }
+        });
     </script>
 
     <script>
