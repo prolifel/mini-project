@@ -31,13 +31,13 @@
                 <ul class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400 rtl:divide-x-reverse"
                     id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
                     <li class="w-full">
-                        <button id="total-tab" data-tabs-target="#total" type="button" role="tab" aria-controls="total"
-                            aria-selected="false"
-                            class="inline-block w-full p-4 rounded-se-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Total</button>
+                        <button id="total-tab" data-tabs-target="#total" type="button" role="tab"
+                        aria-controls="total" aria-selected="true"
+                        class="inline-block w-full p-4 rounded-se-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Total</button>
                     </li>
                     <li class="w-full">
                         <button id="project-tab" data-tabs-target="#project" type="button" role="tab"
-                            aria-controls="project" aria-selected="true"
+                            aria-controls="project" aria-selected="false"
                             class="inline-block w-full p-4 rounded-ss-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Project</button>
                     </li>
                     <li class="w-full">
@@ -46,8 +46,8 @@
                             class="inline-block w-full p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Meeting</button>
                     </li>
                     <li class="w-full">
-                        <button id="unproductive-tab" data-tabs-target="#unproductive" type="button" role="tab" aria-controls="unproductive"
-                            aria-selected="false"
+                        <button id="unproductive-tab" data-tabs-target="#unproductive" type="button" role="tab"
+                            aria-controls="unproductive" aria-selected="false"
                             class="inline-block w-full p-4 rounded-se-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Unproductive
                             Hour</button>
                     </li>
@@ -78,7 +78,8 @@
 
                                 <div class="flex flex-col items-center justify-center">
                                     <dt class="mb-2 text-3xl font-extrabold"> {{ $project }}</dt>
-                                    <dd class="text-gray-500 dark:text-gray-400">Total hours of work in <b>Summary</b> category</dd>
+                                    <dd class="text-gray-500 dark:text-gray-400">Total hours of work in <b>Summary</b>
+                                        category</dd>
                                 </div>
                             </dl>
                         </div>
@@ -93,14 +94,15 @@
 
                                 <div class="flex flex-col items-center justify-center">
                                     <dt class="mb-2 text-3xl font-extrabold"> {{ $meeting }}</dt>
-                                    <dd class="text-gray-500 dark:text-gray-400">Total hours of work in <b>Meeting</b> category</dd>
+                                    <dd class="text-gray-500 dark:text-gray-400">Total hours of work in <b>Meeting</b>
+                                        category</dd>
                                 </div>
                             </dl>
                         </div>
 
                     </div>
-                    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="unproductive" role="tabpanel"
-                        aria-labelledby="unproductive-tab">
+                    <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="unproductive"
+                        role="tabpanel" aria-labelledby="unproductive-tab">
                         <div id="accordion-flush" data-accordion="collapse"
                             data-active-classes="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                             data-inactive-classes="text-gray-500 dark:text-gray-400">
@@ -109,7 +111,8 @@
 
                                 <div class="flex flex-col items-center justify-center">
                                     <dt class="mb-2 text-3xl font-extrabold"> {{ $unproductive }}</dt>
-                                    <dd class="text-gray-500 dark:text-gray-400">Total hours of work in <b>Unproductive Hour</b> category</dd>
+                                    <dd class="text-gray-500 dark:text-gray-400">Total hours of work in <b>Unproductive
+                                            Hour</b> category</dd>
                                 </div>
                             </dl>
                         </div>
