@@ -22,11 +22,23 @@ class RecordController extends Controller
         $records = $records->limit(3)->get();
         $recordOngoing = Record::where('date', $currentDateTime)->where('user_id', $id)->whereNull('end_time')->orderBy("created_at", "desc")->first();
         $manualStartTime = !is_null($records) ? (!is_null($records->first()) ? $records->first()->end_time : '09:00') : '09:00';
+
+        //send data for donut chart
+        $date = Carbon::now()->format('Y-m-d');
+        $total = DB::select("SELECT
+            category_id,
+            SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time,start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time
+            FROM records
+            WHERE user_id = $id AND date = '$date'
+            GROUP BY category_id
+            ORDER BY category_id;");
+
         return view("welcome", [
             "records" => $records,
             "recordOngoing" => $recordOngoing,
             "isMore" => $isMore,
-            "manualStartTime" => $manualStartTime
+            "manualStartTime" => $manualStartTime,
+            "total" => $total
         ]);
     }
 
@@ -51,7 +63,7 @@ class RecordController extends Controller
         $currentDateTime = strtotime(Carbon::now()->format('Y-m-d'));
 
         $record = new Record();
-        
+
         switch ($request->input("type")) {
             case 'manual':
                 $record->start_time = $request->input('start');
@@ -62,7 +74,7 @@ class RecordController extends Controller
                 $date = Carbon::now()->format('Y-m-d');
                 break;
             default:
-                return back()->with('error', 'Silakan pilih record secara manual atau otomatis!');
+                return back()->with('error', 'Please select records manually or automatically!');
         }
         $record->date = $date;
         $record->description = $request->input('description');
@@ -110,18 +122,19 @@ class RecordController extends Controller
     }
 
     public function report()
-    {   
+    {
         $records = "";
         $graph = [];
-        return view("report", compact("records", 'graph'));
+        $periode = 0;
+        return view("report", compact("records", 'graph', 'periode'));
     }
 
     public function detailReport(Request $request)
     {
         $id = auth()->user()->id;
         $periode = $request->periode;
-        
-        if($periode==2) {
+
+        if($periode==2 && $request->bulan!=null) {
             //table
             $tahun = Carbon::now()->format('Y');
             $bulan = $request->bulan;
@@ -139,7 +152,7 @@ class RecordController extends Controller
                 GROUP BY category_id, week
                 ORDER BY week ASC, category_id;");
             // dd($graph);
-        } else {
+        } else if($periode==1) {
             //table
             $date = Carbon::now()->format('Y-m-d');
             $records = Record::where('date', $date)->where('user_id', $id)->orderBy("created_at", "desc")->get();
@@ -153,9 +166,12 @@ class RecordController extends Controller
                 GROUP BY category_id
                 ORDER BY category_id;");
             // dd($graph);
+        } else {
+            $records = "";
+            $graph = [];
         }
-        
-        return view("report", compact('records', 'graph'));
+
+        return view("report", compact('records', 'graph', 'periode'));
     }
 
     public function graph()
@@ -167,11 +183,11 @@ class RecordController extends Controller
             // $bulan = $request->bulan;
             // $start_date = Carbon::create($tahun, $bulan)->firstOfMonth();
             // $end_date = Carbon::create($tahun, $bulan)->lastOfMonth();
-            
+
             // $records = Record::whereBetween('date', [$start_date, $end_date])->where('user_id', $id)->orderBy("created_at", "desc")->get();
         // } else {
             $date = Carbon::now()->format('Y-m-d');
-            
+
             $records = Record::where('date', $date)->where('user_id', 2)->orderBy("created_at", "desc")->get();
             // $records = [];
         // }
@@ -180,12 +196,48 @@ class RecordController extends Controller
         return view("graph", compact('records'));
     }
 
-    public function table()
+    public function summary()
     {
-        // $id = auth()->user()->id;
-        // $currentDateTime = Carbon::now()->format('Y-m-d');
-        // $records = Record::where('date', $currentDateTime)->where('user_id', $id)->orderBy("created_at", "desc")->get();
-        return view("table");
+        $id = auth()->user()->id;
+        $date = Carbon::now()->format('Y-m-d');
+        $summary = DB::select("SELECT
+                SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time
+                FROM records
+                WHERE user_id = $id AND date = '$date'
+                ");
+        $project = DB::select("SELECT
+                SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time
+                FROM records
+                WHERE user_id = $id AND date = '$date' AND category_id=1
+                ");
+        $meeting = DB::select("SELECT
+                SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time
+                FROM records
+                WHERE user_id = $id AND date = '$date' AND category_id=2
+                ");
+        $unproductive = DB::select("SELECT
+                SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time
+                FROM records
+                WHERE user_id = $id AND date = '$date' AND category_id=3
+                ");
+
+        $summaryHours = is_null($summary[0]->total_time) ? 0 : floor($summary[0]->total_time);
+        $projectHours = is_null($project[0]->total_time) ? 0 : floor($project[0]->total_time);
+        $meetingHours = is_null($meeting[0]->total_time) ? 0 : floor($meeting[0]->total_time);
+        $unproductiveHours = is_null($unproductive[0]->total_time) ? 0 : floor($unproductive[0]->total_time);
+
+        $summaryMinutes = is_null($summary[0]->total_time) ? 0 : ($summary[0]->total_time * 60) % 60 ;
+        $projectMinutes = is_null($project[0]->total_time) ? 0 : ($project[0]->total_time * 60) % 60 ;
+        $meetingMinutes = is_null($meeting[0]->total_time) ? 0 : ($meeting[0]->total_time * 60) % 60 ;
+        $unproductiveMinutes = is_null($unproductive[0]->total_time) ? 0 : ($unproductive[0]->total_time * 60) % 60 ;
+
+        $summary = "$summaryHours hours $summaryMinutes minutes";
+        $project = "$projectHours hours $projectMinutes minutes";
+        $meeting = "$meetingHours hours $meetingMinutes minutes";
+        $unproductive = "$unproductiveHours hours $unproductiveMinutes minutes";
+
+        // dd($meeting);
+        return view("summary", compact("summary", "project", "meeting", "unproductive"));
     }
 
     public function endAutoRecord(Request $request)
@@ -208,7 +260,7 @@ class RecordController extends Controller
             if (!is_null($record->end_time)) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Record tersebut telah berakhir!',
+                    'message' => 'The record has ended',
                 ], 400);
             }
 
@@ -217,7 +269,7 @@ class RecordController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Record telah tersimpan',
+                'message' => 'The record has been saved',
             ]);
         } catch (\Throwable $th) {
             return response()->json([

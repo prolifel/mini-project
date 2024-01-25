@@ -156,7 +156,8 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
                                             a Label</label>
                                         <select id="category_label" name="category_id"
-                                            class="bg-gray-50 border border-gray-3 00 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            class="bg-gray-50 border border-gray-3 00 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required>
                                             <option value="" selected disabled>Choose an activity ...</option>
                                             <option value="1">Project</option>
                                             <option value="2">Meeting</option>
@@ -254,6 +255,9 @@
                             @forelse ($records as $record)
                                 <div
                                     class=" block lg:max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-3 md:max-w-full">
+                                    <div>
+                                        <canvas id="chart"></canvas>
+                                    </div>
                                     <h5 class=" text-xl font-bold tracking-tight text-gray-900 dark:text-white ml-0.5">
                                         {{ $record->category->name }}
                                     </h5>
@@ -320,6 +324,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- DatePicker Validation -->
+
 
     <script>
         function calculateMinDate() {
@@ -343,36 +351,83 @@
                 minDate: -1
             });
         });
-
-        
     </script>
-    <script>
-        const minStartTime = "09:00";
-        const maxStartTime = "18:00";
 
-        
+
+    <!-- TimePicker Validation -->
+    <script>
+        let temp = ("{{ $manualStartTime }}").split(":");
+        const minStartTime = temp[0] + ":" + temp[1];
+        console.log(minStartTime);
+
+
+        let maxStartTime = minStartTime > "16:00" ? minStartTime : "16:00";
+        let minEndTime = "10:00";
+        const maxEndTime = "17:00";
+
+        const startTimer = document.getElementById('start');
+        const endTimer = document.getElementById('end');
+
+        const isDayDone = minStartTime >= maxEndTime;
+
+
         if ($('#start').length > 0) {
-            document.getElementById('start').addEventListener('change', function() {
-                const startTime = document.getElementById('start').value;
-                console.log(startTime);
-                document.getElementById('end').min = startTime;
+            startTimer.addEventListener('change', function() {
+                if (startTimer.value < minStartTime) {
+                    alert("please enter valid start time");
+                    startTimer.value = minStartTime;
+                }
+                if (startTimer.value > maxStartTime) {
+                    alert("please enter valid start time");
+                    startTimer.value = maxStartTime;
+                }
+                minEndTime = startTimer.value;
             });
         }
+        if ($('#end').length > 0) {
+            endTimer.addEventListener('change', function() {
+                if (endTimer.value < minEndTime) {
+                    alert("please enter valid end time");
+                    endTimer.value = minEndTime;
+                }
+                if (endTimer.value > maxEndTime) {
+                    alert("please enter valid end time");
+                    endTimer.value = maxEndTime;
+                }
+            });
+        }
+    </script>
 
-        let timer = document.getElementById("appt");
 
-        timer.addEventListener("change", function() {
-            if (timer.value < minStartTime) {
-                alert("please enter valid start time");
-                timer.value = minStartTime;
-            }
-            if (timer.value > maxStartTime) {
-                alert("please enter valid start time");
-                timer.value = maxStartTime;
-            }
+    <!-- Chart generation -->
+    <script>
+        //get data
+        let total = <?php echo json_encode($total); ?>;
+        let data = [0, 0, 0, 0];
+        total.forEach(t => {
+            data[t.category_id] = t.total_time;
+        });
+        data[0] = 8 - data.reduce((acc, curr) => acc + curr, 0);
+
+        new Chart(document.getElementById("chart"), {
+            type: "doughnut",
+            data: {
+                labels: ["Unlabelled", "Project", "Meeting", "Unproductive"],
+                datasets: [{
+                    label: "Today's Task Summary",
+                    data: data,
+                    backgroundColor: [
+                        'rgb(220,220,220)',
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                    ]
+                }, ],
+            },
         });
     </script>
 
+    <!-- input validation -->
     <script>
         $("#manualRadio").hide();
         $(document).ready(function() {
@@ -421,7 +476,7 @@
 
         $('#submitButton').on('click', function(event) {
             event.preventDefault();
-            if ($('#category_label').val() == "") {
+            if ($('#category_label').val() == "" || $('#category_label').val() == null) {
                 alert('Please fill the category')
                 return
             }
