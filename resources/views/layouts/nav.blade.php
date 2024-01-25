@@ -2,8 +2,7 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div class="flex justify-between items-center gap-x-8">
             <a href="{{ route('welcome') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="{{ asset('images/wongko.svg') }}" class="h-8 ml-7" alt="Flowbite Logo">
-                {{-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> --}}
+                <img src="{{ asset('images/wonki.png') }}" class="h-12 ml-7" alt="Flowbite Logo">
             </a>
             <div class="flex hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul

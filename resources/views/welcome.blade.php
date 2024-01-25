@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css"
         integrity="sha512-hbs/7O+vqWZS49DulqH1n2lVtu63t3c3MTAn0oYMINS5aT8eIAbJGDXgLt6IxDHcWyzVTgf9XyzZ9iWyVQ7mCQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 </head>
 
 <body class="font-sanse antialiased bg-gray-100">
@@ -27,7 +29,7 @@
                 class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center  dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
 
                 @auth
-                    <div class=" grid w-full  sm:grid-cols-2 mt-10 sm:gap-6 lg:grid-cols-3 lg:gap-8 ">
+                    <div class=" grid w-full  sm:grid-cols-2 mt-10 sm:gap-4 lg:grid-cols-3 lg:gap-5 ">
                         @if (session('error'))
                             <div id="alert-2"
                                 class="col-span-3 flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -80,7 +82,7 @@
                         @endif
                         <div id="alertQuote"
                             style="display: none;"
-                            class="mt-5 flex-none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                            class="mt-5 flex-none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
                             role="alert">
                             <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
@@ -93,12 +95,10 @@
                         @if (!is_null($recordOngoing))
                             <div class=" col-span-2" id="ongoing">
                                 <div
-                                    class=" mx-5 my-3 flex-none  w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                    class="mx-5 mt-0 flex-none w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                                     <h5
                                         class="justify-center mb-7 text-3xl font-bold text-gray-900 dark:text-white text-center ">
                                         Ongoing Activity</h5>
-                                    {{-- <p class="mb-14 text-base text-gray-500 sm:text-lg dark:text-gray-400 text-center">
-                                        Category: {{ $recordOngoing->category->name }} </p> --}}
                                     <hr>
 
                                     <div class="flex mt-5">
@@ -233,8 +233,8 @@
                                 </div>
                             </div>
                         @endif
-                        <div class=" lg:col-span-1 flex-none justify-center col-span-2">
-                            <div class=" block lg:max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-3 md:max-w-full">
+                        <div class="lg:col-span-1 flex-none justify-center col-span-2">
+                            <div class=" block lg:max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 mt-0 md:max-w-full">
                                 <h5 class=" text-xl font-bold tracking-tight text-gray-900 dark:text-white ml-0.5">
                                     Hi, {{ auth()->user()->name }}
                                 </h5>

@@ -1,0 +1,7 @@
+.swal2-title {
+    font-size: revert;
+}
+
+input {
+    padding: 5px 10px 5px 10px !important;
+}

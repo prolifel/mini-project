@@ -4,10 +4,10 @@
 
     <div
         class="w-50 p-4 text-center">
-        <div class="w-96  m-auto">
-            <img src="{{ asset('images/wongko.svg') }}" alt="wonki" class="h-auto w-full">
+        <div class="m-auto w-60">
+            <img src="{{ asset('images/wonki.png') }}" alt="wonki" class="h-auto w-full">
         </div>
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Hola!</h5>
+        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Hola 🙌</h5>
         <p class="mb-2 text-base text-gray-500 sm:text-lg dark:text-gray-400">Welcome to Employee
             Activity
             Tracker.
@@ -53,13 +53,6 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>

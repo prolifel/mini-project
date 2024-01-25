@@ -1,6 +1,7 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
+        <h5 class="text-center text-xl font-bold text-gray-900 dark:text-white mb-4">Please register yourself.</h5>
 
         <!-- Name -->
         <div>
@@ -17,14 +18,14 @@
         </div>
 
         <!-- Username -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="username" :value="__('Username')" />
             <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
         <!-- Role -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="role" :value="__('Role')" />
             <x-text-input id="role" class="block mt-1 w-full" type="text" name="role" :value="old('role')" required autofocus autocomplete="role" />
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
