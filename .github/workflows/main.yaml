@@ -18,5 +18,5 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         host: ${{ secrets.SSH_HOST }}
         password: ${{ secrets.SSH_PASSWORD }}
-        script: 'cd ${{ secrets.SSH_PATH }} && git config --global --add safe.directory ${{ secrets.SSH_PATH }} && git fetch origin && git pull origin main && ./server_deploy.sh'
+        script: 'cd ${{ secrets.SSH_PATH }} && git config --global --add safe.directory ${{ secrets.SSH_PATH }} && ./server_deploy.sh'
             
