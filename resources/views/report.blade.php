@@ -104,6 +104,14 @@
                     @endif
                 </div>
             </div>
+
+            <div>
+                @if ($graph == [])
+                    <p>Ini kosong</p>
+                @else
+                    <p>Ini Grafik</p>
+                @endif
+            </div>
         </div>
     </div>
 
@@ -120,6 +128,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 
     <script>
+        let graph = <?php echo json_encode($graph) ?>;
+        console.log(graph);
         $(document).ready(function() {
             $('#myTable').DataTable();
         });

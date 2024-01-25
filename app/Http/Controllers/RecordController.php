@@ -112,7 +112,8 @@ class RecordController extends Controller
     public function report()
     {   
         $records = "";
-        return view("report", compact("records"));
+        $graph = [];
+        return view("report", compact("records", 'graph'));
     }
 
     public function detailReport(Request $request)
@@ -130,12 +131,13 @@ class RecordController extends Controller
 
             //graph
             $graph = DB::select("SELECT
-                WEEK(date) as week,
+                category_id,
+                WEEK(date) - WEEK('2024-01-01') as week,
                 SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time_week
                 FROM records
-                WHERE user_id = 1 AND date BETWEEN '$start_date' AND '$end_date'
-                GROUP BY WEEK(date)
-                ORDER BY WEEK(date);");
+                WHERE user_id = $id AND date BETWEEN '$start_date' AND '$end_date'
+                GROUP BY category_id, week
+                ORDER BY week ASC, category_id;");
             // dd($graph);
         } else {
             //table
@@ -143,9 +145,17 @@ class RecordController extends Controller
             $records = Record::where('date', $date)->where('user_id', $id)->orderBy("created_at", "desc")->get();
 
             //graph
+            $graph = DB::select("SELECT
+                category_id,
+                SUM(IF(TIMEDIFF(end_time, start_time) < 0, -ABS(HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60), HOUR(TIMEDIFF(end_time, start_time)) + MINUTE(TIMEDIFF(end_time, start_time)) / 60)) as total_time
+                FROM records
+                WHERE user_id = $id AND date = '$date'
+                GROUP BY category_id
+                ORDER BY category_id;");
+            // dd($graph);
         }
         
-        return view("report", compact('records'));
+        return view("report", compact('records', 'graph'));
     }
 
     public function graph()
