@@ -6,6 +6,25 @@ input {
     padding: 5px 10px 5px 10px !important;
 }
 
-input#datepicker::placeholder {
-    padding-left: 30px;
+input#datepicker {
+    padding-left: 38px !important;
+}
+
+.blink {
+    animation: blinker 1.5s linear infinite;
+    color: red;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 4px 30px 4px 4px !important;
+}
+
+select:not([size]).dataTables_wrapper.dataTables_length {
+    background-position: right 0.75rem !important;
 }

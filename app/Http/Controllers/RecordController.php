@@ -61,6 +61,8 @@ class RecordController extends Controller
         $time = strtotime($date);
         $date = date('Y-m-d', $time);
         $currentDateTime = strtotime(Carbon::now()->format('Y-m-d'));
+        $start = $request->input('start');
+        $end = $request->input('end');
 
         $record = new Record();
 

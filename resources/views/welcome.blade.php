@@ -30,9 +30,46 @@
 
                 @auth
                     <div class=" grid w-full  sm:grid-cols-2 mt-10 sm:gap-4 lg:grid-cols-3 lg:gap-5 ">
+                        <div id="alertQuote"
+                            style="display: none;"
+                            class="mt-5 flex-none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                            role="alert">
+                            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                            </svg>
+                            <span class="sr-only">Quotes for you 💋</span>
+                            <div>
+                                <span class="font-medium" id="quotesAuthor"></span> said "<span id="quotesContent"></span>"
+                            </div>
+                        </div>
+                        @if (session('sukses'))
+                            <div id="alert-3"
+                                class="flex=none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                                role="alert">
+                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                </svg>
+                                <span class="text-sm font-medium">Success!</span>
+                                <div class="ms-3 text-sm font-medium">
+                                    {{ session('sukses') }}
+                                </div>
+                                <button type="button"
+                                    class="ms-auto -mx-1.5  bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+                                    data-dismiss-target="#alert-3" aria-label="Close">
+                                    <span class="sr-only">Close</span>
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                </button>
+                            </div>
+                        @endif
                         @if (session('error'))
                             <div id="alert-2"
-                                class="col-span-3 flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                                class="flex=none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                                 role="alert">
                                 <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -55,43 +92,7 @@
                                 </button>
                             </div>
                         @endif
-                        @if (session('sukses'))
-                            <div id="alert-3"
-                                class=" mt-10 flex=none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
-                                role="alert">
-                                <svg class="flex-shrink-0 w-4 h-4 mr-2" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                </svg>
-                                <span class="text-sm font-medium">Success!</span>
-                                <div class="ms-3 text-sm font-medium">
-                                    {{ session('sukses') }}
-                                </div>
-                                <button type="button"
-                                    class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
-                                    data-dismiss-target="#alert-3" aria-label="Close">
-                                    <span class="sr-only">Close</span>
-                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                    </svg>
-                                </button>
-                            </div>
-                        @endif
-                        <div id="alertQuote"
-                            style="display: none;"
-                            class="mt-5 flex-none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
-                            role="alert">
-                            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                            </svg>
-                            <span class="sr-only">Quotes for you 💋</span>
-                            <div>
-                                <span class="font-medium" id="quotesAuthor"></span> said "<span id="quotesContent"></span>"
-                            </div>
-                        </div>
+
                         @if (!is_null($recordOngoing))
                             <div class=" col-span-2" id="ongoing">
                                 <div
@@ -131,7 +132,7 @@
                         @else
                             <div
                                 class="col-span-2">
-                                <div class="mx-5 my-3 flex-none w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <div class="mx-5 mt-0 flex-none w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                                     <form class="mx-5 py-3" action="{{ route('record.store') }}" method="POST">
                                         @csrf
                                         <div class="mb-3">
@@ -185,7 +186,7 @@
                                                     <div
                                                         class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 mt-7"
-                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                            aria-hidden="false" xmlns="http://www.w3.org/2000/svg"
                                                             fill="currentColor" viewBox="0 0 20 20">
                                                             <path
                                                                 d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
@@ -209,9 +210,6 @@
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-1"
                                                                 min="{{ $manualStartTime }}" max="17:00">
                                                         </div>
-                                                        <script>
-                                                            console.log("manual startTime:{{ $manualStartTime }}");
-                                                        </script>
                                                         <div class="flex items-center me-2">
                                                             <label for="end"
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">End
@@ -239,13 +237,17 @@
                                     Hi, {{ auth()->user()->name }}
                                 </h5>
                                 <p class="font-normal text-gray-700 text-sm dark:text-gray-400 mb-1.5 m-0.5">
-                                    Here is your today time. Happy working 👋
+                                    Here is your today's worklo. Happy working 👋
                                 </p>
                                 <canvas id="chart"></canvas>
+
                             </div>
+                            <p class="text-center font-bold my-5 text-2xl">Your Last Three Activities</p>
                             @forelse ($records as $record)
+
                                 <div
                                     class=" block lg:max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-3 md:max-w-full">
+
                                     <h5 class=" text-xl font-bold tracking-tight text-gray-900 dark:text-white ml-0.5">
                                         {{ $record->category->name }}
                                     </h5>
@@ -260,7 +262,13 @@
                                         </div>
                                         <div class="p-2 pb-2 border-x-2 b border-t-2 w-full">
                                             <p class="text-sm lg:text-xs lg:text-center">End Time</p>
-                                            <p class="text-md text-center">{{ $record->end_time }}</p>
+                                            <p class="text-md text-center">
+                                                @if (is_null($record->end_time))
+                                                    <span class="blink">LIVE &#9679;</span>
+                                                @else
+                                                    {{ $record->end_time }}
+                                                @endif
+                                            </p>
                                         </div>
                                         <div class="p-2 pb-2 border-t-2 w-full">
                                             <p class="text-sm lg:text-xs lg:text-center text-nowrap">Input Late?
@@ -272,8 +280,8 @@
                                 </div>
                             @empty
                                 <div
-                                    class=" block max-w-sm px-6 pt-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-5">
-                                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    class=" block max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-5">
+                                    <h5 class="mb-2 text-xl     tracking-tight text-gray-900 dark:text-white text-center self-center">
                                         Hooray! Your task is empty 😀
                                     </h5>
                                 </div>
