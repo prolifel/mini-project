@@ -2,21 +2,19 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
 
     steps:
-     - name: Deploy to production
-       uses: appleboy/ssh-action@master
-       with:
-        username: ${{ secrets.SSH_USERNAME }}
-        host: ${{ secrets.SSH_HOST }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: 'cd ${{ secrets.SSH_PATH }} && git config --global --add safe.directory ${{ secrets.SSH_PATH }} && ./server_deploy.sh'
-            
+      - name: Deploy to production
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.SSH_USERNAME }}
+          host: ${{ secrets.SSH_HOST }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: "cd ${{ secrets.SSH_PATH }} && git config --global --add safe.directory ${{ secrets.SSH_PATH }} && bash ./server_deploy.sh"
