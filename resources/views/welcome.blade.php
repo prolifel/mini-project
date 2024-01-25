@@ -108,6 +108,18 @@
                                 </button>
                             </div>
                         @endif
+                        <div id="alertQuote"
+                            style="display: none;"
+                            class="mt-5 flex-none col-span-2 p-4 mx-5 rounded-lg shadow sm:p-4 col-span-3 flex items-center mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                            role="alert">
+                            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                            </svg>
+                            <span class="sr-only">Quotes for you 💋</span>
+                            <div>
+                                <span class="font-medium" id="quotesAuthor"></span> said "<span id="quotesContent"></span>"
+                            </div>
+                        </div>
                         @if (!is_null($recordOngoing))
                             <div class=" col-span-2" id="ongoing">
                                 <div
@@ -148,120 +160,126 @@
                             </div>
                         @else
                             <div
-                                class="col-span-2 w-full p-4 bg-white mx-5 my-3 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                                <form class="mx-5 py-3" action="{{ route('record.store') }}" method="POST">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label for="category_label"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
-                                            a Label</label>
-                                        <select id="category_label" name="category_id"
-                                            class="bg-gray-50 border border-gray-3 00 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            required>
-                                            <option value="" selected disabled>Choose an activity ...</option>
-                                            <option value="1">Project</option>
-                                            <option value="2">Meeting</option>
-                                            <option value="3">Unproductive Hour</option>
-                                        </select>
-
-                                    </div>
-                                    <div class="mb-6">
-                                        <label for="description"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                        <textarea id="description" name="description" rows="3" style="resize:none"
-                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Write your description here..." required></textarea>
-
-                                        </textarea>
-                                    </div>
-
-                                    <div class="mb-6">
-
-                                        <div class="flex">
-                                            <div class="flex items-center me-4">
-                                                <input id="autoRadioButton" type="radio" value="auto" name="type"
-                                                    checked
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="inline-radio"
-                                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Auto</label>
-                                            </div>
-                                            <div class="flex items-center me-4">
-                                                <input id="manualRadioButton" type="radio" value="manual"
-                                                    name="type"
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="inline-2-radio"
-                                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Manual</label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div id="manualRadio">
-                                        <div class="mb-6">
-                                            <div class="relative max-w-sm">
-                                                <label for="date"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
-                                                <div
-                                                    class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 mt-7"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 20 20">
-                                                        <path
-                                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                                    </svg>
-                                                </div>
-                                                <input type="text" id="datepicker"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="Select date" name="date"></p>
-
-                                            </div>
+                                class="col-span-2">
+                                <div class="mx-5 my-3 flex-none w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                    <form class="mx-5 py-3" action="{{ route('record.store') }}" method="POST">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="category_label"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                                                a Label</label>
+                                            <select id="category_label" name="category_id"
+                                                class="bg-gray-50 border border-gray-3 00 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                                <option value="" selected disabled>Choose an activity ...</option>
+                                                <option value="1">Project</option>
+                                                <option value="2">Meeting</option>
+                                                <option value="3">Unproductive Hour</option>
+                                            </select>
 
                                         </div>
                                         <div class="mb-6">
-                                            <div class="relative max-w-sm">
-                                                <div class="flex">
-                                                    <div class="flex items-center me-2">
-                                                        <label for="start"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Start
-                                                            time</label>
-                                                        <input type="time" id="start" name="start"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-1"
-                                                            min="{{ $manualStartTime }}" max="17:00">
+                                            <label for="description"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                            <textarea id="description" name="description" rows="3" style="resize:none"
+                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Write your description here..." required></textarea>
+
+                                            </textarea>
+                                        </div>
+
+                                        <div class="mb-6">
+                                            <div class="flex">
+                                                <div class="flex items-center me-4">
+                                                    <input id="autoRadioButton" type="radio" value="auto" name="type"
+                                                        checked
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="inline-radio"
+                                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Auto</label>
+                                                </div>
+                                                <div class="flex items-center me-4">
+                                                    <input id="manualRadioButton" type="radio" value="manual"
+                                                        name="type"
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="inline-2-radio"
+                                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Manual</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div id="manualRadio" style="display: none;">
+                                            <div class="mb-6">
+                                                <div class="relative max-w-sm">
+                                                    <label for="date"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
+                                                    <div
+                                                        class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 mt-7"
+                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                            fill="currentColor" viewBox="0 0 20 20">
+                                                            <path
+                                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                                        </svg>
                                                     </div>
-                                                    <script>
-                                                        console.log("manual startTime:{{ $manualStartTime }}");
-                                                    </script>
-                                                    <div class="flex items-center me-2">
-                                                        <label for="end"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">End
-                                                            time</label>
-                                                        <input type="time" id="end" name="end"
-                                                            min="09:00" max="18:00"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-1">
+                                                    <input type="text" id="datepicker"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        placeholder="Select date" name="date"></p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-6">
+                                                <div class="relative max-w-sm">
+                                                    <div class="flex">
+                                                        <div class="flex items-center me-2">
+                                                            <label for="start"
+                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">Start
+                                                                time</label>
+                                                            <input type="time" id="start" name="start"
+                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-1"
+                                                                min="{{ $manualStartTime }}" max="17:00">
+                                                        </div>
+                                                        <script>
+                                                            console.log("manual startTime:{{ $manualStartTime }}");
+                                                        </script>
+                                                        <div class="flex items-center me-2">
+                                                            <label for="end"
+                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">End
+                                                                time</label>
+                                                            <input type="time" id="end" name="end"
+                                                                min="09:00" max="18:00"
+                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-7 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-1">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div id="autoRadio">
-                                    </div>
-                                    <button type="submit" id="submitButton"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-                                </form>
-
+                                        <div id="autoRadio">
+                                        </div>
+                                        <button type="submit" id="submitButton"
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                                    </form>
+                                </div>
                             </div>
                         @endif
                         <div class=" lg:col-span-1 flex-none justify-center col-span-2">
+                            <div class=" block lg:max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-3 md:max-w-full">
+                                <h5 class=" text-xl font-bold tracking-tight text-gray-900 dark:text-white ml-0.5">
+                                    Hi, {{ auth()->user()->name }}
+                                </h5>
+                                <p class="font-normal text-gray-700 text-sm dark:text-gray-400 mb-1.5 m-0.5">
+                                    Here is your today time. Happy working 👋
+                                </p>
+                                <canvas id="chart"></canvas>
+                            </div>
                             @forelse ($records as $record)
                                 <div
                                     class=" block lg:max-w-sm px-6 py-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-5 my-3 md:max-w-full">
-                                    <div>
-                                        <canvas id="chart"></canvas>
-                                    </div>
                                     <h5 class=" text-xl font-bold tracking-tight text-gray-900 dark:text-white ml-0.5">
                                         {{ $record->category->name }}
                                     </h5>
-                                    <p class="font-normal text-gray-700 text-sm dark:text-gray-400 mb-1.5 m-0.5">
+                                    <p class="font-normal text-gray-700 text-sm dark:text-gray-400 mb-2 m-0.5">
                                         {{ $record->description }}
                                     </p>
                                     <!-- properties -->
@@ -313,9 +331,6 @@
             </div>
         </div>
     </div>
-
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-                                                                <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -327,8 +342,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- DatePicker Validation -->
-
-
     <script>
         function calculateMinDate() {
             const today = new Date();
@@ -370,15 +383,14 @@
 
         const isDayDone = minStartTime >= maxEndTime;
 
-
         if ($('#start').length > 0) {
             startTimer.addEventListener('change', function() {
                 if (startTimer.value < minStartTime) {
-                    alert("please enter valid start time");
+                    alert("Please enter valid start time");
                     startTimer.value = minStartTime;
                 }
                 if (startTimer.value > maxStartTime) {
-                    alert("please enter valid start time");
+                    alert("Please enter valid start time");
                     startTimer.value = maxStartTime;
                 }
                 minEndTime = startTimer.value;
@@ -387,11 +399,11 @@
         if ($('#end').length > 0) {
             endTimer.addEventListener('change', function() {
                 if (endTimer.value < minEndTime) {
-                    alert("please enter valid end time");
+                    alert("Please enter valid end time");
                     endTimer.value = minEndTime;
                 }
                 if (endTimer.value > maxEndTime) {
-                    alert("please enter valid end time");
+                    alert("Please enter valid end time");
                     endTimer.value = maxEndTime;
                 }
             });
@@ -401,8 +413,7 @@
 
     <!-- Chart generation -->
     <script>
-        //get data
-        let total = <?php echo json_encode($total); ?>;
+        let total = <?php echo json_encode($total) ?>;
         let data = [0, 0, 0, 0];
         total.forEach(t => {
             data[t.category_id] = t.total_time;
@@ -414,7 +425,7 @@
             data: {
                 labels: ["Unlabelled", "Project", "Meeting", "Unproductive"],
                 datasets: [{
-                    label: "Today's Task Summary",
+                    label: "Today's Task Summary (in hours)",
                     data: data,
                     backgroundColor: [
                         'rgb(220,220,220)',
@@ -439,6 +450,19 @@
                 $("#manualRadio").show();
                 $("#autoRadio").hide();
             });
+
+            $.get("https://api.quotable.io/quotes/random", function (data) {
+                if (typeof data === 'object' && data !== null) {
+                    let quotes = data[0]
+                    if (quotes.content == "") {
+                        return
+                    }
+
+                    $('#quotesAuthor').html(quotes.author)
+                    $('#quotesContent').html(quotes.content)
+                    $("#alertQuote").slideDown(500);
+                }
+            })
         });
 
         $('#endButton').on('click', function(event) {
